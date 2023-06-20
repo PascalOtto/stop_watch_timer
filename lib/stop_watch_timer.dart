@@ -37,6 +37,7 @@ class StopWatchTimer {
     this.onChangeRawMinute,
     this.onStopped,
     this.onEnded,
+    this.resolutionInterval = 1,
   }) {
     /// Set presetTime
     _presetTime = presetMillisecond;
@@ -101,6 +102,7 @@ class StopWatchTimer {
   final Function(int)? onChangeRawMinute;
   final VoidCallback? onStopped;
   final VoidCallback? onEnded;
+  final int resolutionInterval;
 
   final PublishSubject<int> _elapsedTime = PublishSubject<int>();
 
@@ -334,7 +336,7 @@ class StopWatchTimer {
   void _start() {
     if (!isRunning) {
       _startTime = DateTime.now().millisecondsSinceEpoch;
-      _timer = Timer.periodic(const Duration(milliseconds: 1), _handle);
+      _timer = Timer.periodic(Duration(milliseconds: resolutionInterval), _handle);
     }
   }
 
